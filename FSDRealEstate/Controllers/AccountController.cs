@@ -44,9 +44,26 @@ namespace FSDRealEstate.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-                    await _signInManager.SignInAsync(user, isPersistent: false);
 
-                    return RedirectToAction("index", "Home");
+                    //await _signInManager.SignInAsync(user, isPersistent: false);
+                    //return RedirectToAction("index", "Home");
+
+                    if (model.Email.Contains("agent"))
+                    {
+                        var role = await this._roleManager.FindByNameAsync("Agent");
+
+                        if (role != null)
+                        {
+                            IdentityResult roleresult = await _userManager.AddToRoleAsync(user, role.Name);
+                        }
+                    }
+                    else
+                    {
+                        IdentityResult roleresult = await _userManager.AddToRoleAsync(user, "Seller");
+                    }
+
+
+                    return RedirectToAction("RegisterSuccess", new { email = model.Email });
                 }
 
                 foreach (var error in result.Errors)
@@ -77,7 +94,18 @@ namespace FSDRealEstate.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    _logger.LogInformation("User logged in.");
+
+                    IdentityUser u = await _userManager.FindByEmailAsync(user.Email);
+
+                    if (await _userManager.IsInRoleAsync(u, "Agent"))
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else if (await _userManager.IsInRoleAsync(u, "Seller"))
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
 
                 ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
@@ -90,8 +118,12 @@ namespace FSDRealEstate.Controllers
         {
             await _signInManager.SignOutAsync();
 
-            return RedirectToAction("Login");
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult RegisterSuccess(string email)
+        {
+            return View((object)email);
         }
     }
 }
-
