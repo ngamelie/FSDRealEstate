@@ -1,6 +1,8 @@
 using FSDRealEstate.Data;
+using FSDRealEstate.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+//using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +15,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.AddScoped<IProperty, PropertyRepository>();
+builder.Services.AddScoped<ICategory, CategoryRepository>();
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
