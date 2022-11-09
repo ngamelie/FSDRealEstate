@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using FSDRealEstate.Models;
 
 namespace FSDRealEstate.Data
 {
@@ -8,5 +9,6 @@ namespace FSDRealEstate.Data
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
         }
+        public DbSet<Property> Property { get; set; }
     }
 }
