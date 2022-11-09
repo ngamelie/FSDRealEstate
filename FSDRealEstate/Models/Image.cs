@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace RealEstate.Models
+namespace FSDRealEstate.Models
 {
     public class Image
     {

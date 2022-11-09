@@ -18,6 +18,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 
 builder.Services.AddScoped<IProperty, PropertyRepository>();
 builder.Services.AddScoped<ICategory, CategoryRepository>();
+builder.Services.AddScoped<IImage, ImageRepository>();
 
 builder.Services.Configure<IdentityOptions>(options =>
 {

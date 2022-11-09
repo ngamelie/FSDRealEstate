@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using FSDRealEstate.Models;
+using System.Xml;
 
 namespace FSDRealEstate.Data
 {
@@ -11,5 +12,10 @@ namespace FSDRealEstate.Data
         }
         public DbSet<Property> Property { get; set; }
         public DbSet<Category> Category { get; set; }
+        public DbSet<FSDRealEstate.Models.Image> Image { get; set; }
+
+
+
+        
     }
 }
