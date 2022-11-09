@@ -6,6 +6,7 @@ using FSDRealEstate.Models;
 using FSDRealEstate.Repository;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FSDRealEstate.Controllers
 {
@@ -13,10 +14,12 @@ namespace FSDRealEstate.Controllers
     public class PropertyController : Controller
     {
         private readonly IProperty _property;
+        private readonly ICategory _category;
 
-        public PropertyController(IProperty property)
+        public PropertyController(IProperty property, ICategory category)
         {
             _property = property;
+            _category = category;
         }
 
         [HttpGet]
@@ -45,7 +48,28 @@ namespace FSDRealEstate.Controllers
             {
                 return NotFound();
             }
+
             ViewBag.obj = obj;
+            IEnumerable<Category> cateList = _category.GetAll();
+           // ViewBag.cateList = cateList.ToList();
+
+            List<SelectListItem> cateSelect = new List<SelectListItem>();
+
+            foreach (var item in cateList)
+            {
+                if(item.Id == obj.Category_id)
+                {
+                    cateSelect.Add(new SelectListItem { Text = item.CategoryName, Value = item.Id.ToString(), Selected = true});
+                }
+                else
+                {
+                    cateSelect.Add(new SelectListItem { Text = item.CategoryName, Value = item.Id.ToString() });
+                }
+                
+            }
+
+            ViewBag.cateSelect = cateSelect;
+
             return View();
         }
 
@@ -73,10 +97,11 @@ namespace FSDRealEstate.Controllers
 
         [HttpPost]
         [Route("Update")]
-        public async Task<IActionResult> UpdateOne([Bind("Id,Category_id,Owner_id,Address,Price,Status,Description,Location")] Property obj)
+        public async Task<IActionResult> UpdateOne(int cateSelect, [Bind("Id,Category_id,Owner_id,Address,Price,Status,Description,Location")] Property obj)
         {
             if (ModelState.IsValid)
             {
+                obj.Category_id = cateSelect;
                 _property.Update(obj);
                 return RedirectToAction(nameof(Index));
             }

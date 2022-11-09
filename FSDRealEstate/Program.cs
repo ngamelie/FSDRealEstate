@@ -17,6 +17,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddScoped<IProperty, PropertyRepository>();
+builder.Services.AddScoped<ICategory, CategoryRepository>();
 
 builder.Services.Configure<IdentityOptions>(options =>
 {

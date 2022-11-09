@@ -29,24 +29,17 @@
     <div class="col-md-6">
         <label for="Status" class="form-label">Status</label>
         <select id="Status" class="form-select" asp-for="Status" asp-items="Html.GetEnumSelectList<EnumStatus>()">
-            <option value="" selected>Choose...</option>
         </select>
         <span asp-validation-for="Status" class="errMsg"></span>
     </div>
+
     <div class="col-md-6">
-        <label for="Category_id" class="form-label">Category_id</label>
-        <select id="Category_id" class="form-select" asp-for="Category_id">
-            <option selected>Choose...</option>
-            <option value="1">Single House</option>
-            <option value="5">Apartment</option>
-            <option value="3">Condo</option>
-            <option value="6">Cottagge</option>
-        </select>
+        <label for="Category_id" class="form-label">Category</label>
+        @Html.DropDownList("cateSelect")
     </div>
     <div class="col-md-6">
         <label for="Owner_id" class="form-label">Owner_id</label>
         <select id="Owner_id" class="form-select" asp-for="Owner_id">
-            <option selected>Choose...</option>
             <option value="1">Alex</option>
             <option value="2">Bob</option>
             <option value="3">Celina</option>

@@ -10,5 +10,6 @@ namespace FSDRealEstate.Data
         {
         }
         public DbSet<Property> Property { get; set; }
+        public DbSet<Category> Category { get; set; }
     }
 }
