@@ -30,6 +30,14 @@ namespace FSDRealEstate.Repository
             return obj;
         }
 
+        public void DeleteList(int pid)
+        {
+            List<Image> images = _context.Image.Where(i=> i.Property_id == pid).ToList();
+
+            _context.Image.RemoveRange(images);
+            _context.SaveChanges();
+        }
+
         public Image GetObject(int id)
         {
             return _context.Image.Find(id);

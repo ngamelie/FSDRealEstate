@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Properties";
-    var properties = ViewData["Properties"] as List<Property>;
+    //var properties = ViewData["Properties"] as List<Property>;
+    ViewData["imgName"] = "";
 }
 
 <div class="text-center">
@@ -10,16 +11,27 @@
 <div id="Wrapper" class="row">
 
 
-    @foreach (var obj in properties)
+    @foreach (var obj in ViewBag.Properties)
     {
-        <div class="card" style="width: 18rem;">
-            <img src="~/img/noimage.jpg" class="card-img-top" alt="No image">
+        <div class="card col-4" style="width: 20rem;">
+            @if (@obj.img?.ImageUrl == null)
+            {
+                ViewData["imgName"] = "noimage.jpg";
+            }
+            else
+            {
+                ViewData["imgName"] = @obj.img?.ImageUrl;
+            }
+
+            <img src="~/img/@ViewData["imgName"]" class="card-img-top" alt="" asp-append-version="true"/>
+            
             <div class="card-body">
-            NO# : <h5 class="card-title">@obj.Id</h5>
-            Price: <h5 class="card-title">@obj.Price</h5>
-                <p class="card-text">@obj.Description</p>
-                <a class="btn btn-primary" asp-controller="Property" asp-action="Update" asp-route-id="@obj.Id">Update</a>
-                <a class="btn btn-primary" asp-controller="Property" asp-action="Delete" asp-route-id="@obj.Id">Delete</a>
+            NO# : <h5 class="card-title">@obj.p.Id</h5>
+                Price: <h5 class="card-title">@obj.p.Price</h5>
+                <p class="card-text">@obj.p.Description</p>
+                <a class="btn btn-primary" asp-controller="Property" asp-action="Update" asp-route-id="@obj.p.Id">Update</a>
+                <a class="btn btn-primary" asp-controller="Property" asp-action="Delete" asp-route-id="@obj.p.Id">Delete</a>
+                <a class="btn btn-primary" asp-controller="Property" asp-action="AddImage" asp-route-id="@obj.p.Id">Add Image</a>
             </div>
         </div>
     

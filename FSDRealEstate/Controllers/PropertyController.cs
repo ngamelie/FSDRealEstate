@@ -7,6 +7,8 @@ using FSDRealEstate.Repository;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Net;
+using Microsoft.CodeAnalysis;
 
 namespace FSDRealEstate.Controllers
 {
@@ -15,18 +17,69 @@ namespace FSDRealEstate.Controllers
     {
         private readonly IProperty _property;
         private readonly ICategory _category;
+        private readonly IImage _image;
 
-        public PropertyController(IProperty property, ICategory category)
+        public PropertyController(IProperty property, ICategory category, IImage image)
         {
             _property = property;
             _category = category;
+            _image = image; 
+
         }
 
         [HttpGet]
         public ViewResult Index()
         {
-            IEnumerable<Property> iEnumerable = _property.GetAll();
-            ViewData["Properties"] = iEnumerable.ToList();
+            List<Property> propertyList = _property.GetAll().ToList();
+            List<Image> imageList = _image.GetAll().ToList();
+
+            /*            var innerJoin = propertyList.GroupJoin(imageList, p => p.Id, i => i.Property_id, (p, i) => new
+                        {
+                            Id = p.Id,
+                            Category_id = p.Category_id,
+                            Owner_id = p.Owner_id,
+                            Address = p.Address,
+                            Price = p.Price,
+                            Status = p.Status,
+                            Description = p.Description,
+                            Location = p.Location,
+                            ImageUrl = i.ImageUrl
+                        });*/
+
+            /*            var innerJoin = from i in imageList
+                                        from p in propertyList
+                                        .Where(p.Id == i.Property_id)
+                                        select new 
+                                        {
+                                            Id = p.Id,
+                                            Category_id = p.Category_id,
+                                            Owner_id = p.Owner_id,
+                                            Address = p.Address,
+                                            Price = p.Price,
+                                            Status = p.Status,
+                                            Description = p.Description,
+                                            Location = p.Location,
+                                            ImageUrl = i.ImageUrl
+                                        };
+            */
+
+            var innerJoin = from p in propertyList
+                            join i in imageList
+                            on p.Id equals i.Property_id
+                            into p_i
+                            from img in p_i.DefaultIfEmpty()
+                            select new
+                            {
+                                p,
+                                img
+                            };
+
+
+
+
+
+            //ViewData["Properties"] = innerJoin.ToList();
+            ViewBag.Properties = innerJoin;
             return View();
         }
 
@@ -36,6 +89,16 @@ namespace FSDRealEstate.Controllers
             return View();
         }
 
+        [Route("AddImage")]
+        public async Task<IActionResult> AddImage(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            ViewData["Property_id"] = id;
+            return View();
+        }
         [Route("Update")]
         public async Task<IActionResult> Update(int id)
         {
@@ -76,7 +139,7 @@ namespace FSDRealEstate.Controllers
         [Route("Delete")]
         public async Task<IActionResult> Delete(int id)
         {
-
+            _image.DeleteList(id);
             Property obj = _property.Delete(id);
 
             return RedirectToAction(nameof(Index));
@@ -106,7 +169,20 @@ namespace FSDRealEstate.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            return View("Update", new {id = obj.Id });
+            return View("Update", new { id = obj.Id });
+        }
+
+        [HttpPost]
+        [Route("AddImage")]
+        public async Task<IActionResult> AddImage([Bind("Property_id, ImageUrl")] Image obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _image.Create(obj);
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View("AddImage", new { id = obj.Property_id });
         }
 
 
