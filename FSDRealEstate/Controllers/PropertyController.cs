@@ -33,52 +33,14 @@ namespace FSDRealEstate.Controllers
             List<Property> propertyList = _property.GetAll().ToList();
             List<Image> imageList = _image.GetAll().ToList();
 
-            /*            var innerJoin = propertyList.GroupJoin(imageList, p => p.Id, i => i.Property_id, (p, i) => new
-                        {
-                            Id = p.Id,
-                            Category_id = p.Category_id,
-                            Owner_id = p.Owner_id,
-                            Address = p.Address,
-                            Price = p.Price,
-                            Status = p.Status,
-                            Description = p.Description,
-                            Location = p.Location,
-                            ImageUrl = i.ImageUrl
-                        });*/
-
-            /*            var innerJoin = from i in imageList
-                                        from p in propertyList
-                                        .Where(p.Id == i.Property_id)
-                                        select new 
-                                        {
-                                            Id = p.Id,
-                                            Category_id = p.Category_id,
-                                            Owner_id = p.Owner_id,
-                                            Address = p.Address,
-                                            Price = p.Price,
-                                            Status = p.Status,
-                                            Description = p.Description,
-                                            Location = p.Location,
-                                            ImageUrl = i.ImageUrl
-                                        };
-            */
-
             var innerJoin = from p in propertyList
                             join i in imageList
                             on p.Id equals i.Property_id
                             into p_i
                             from img in p_i.DefaultIfEmpty()
                             select new
-                            {
-                                p,
-                                img
-                            };
+                            { p, img };
 
-
-
-
-
-            //ViewData["Properties"] = innerJoin.ToList();
             ViewBag.Properties = innerJoin;
             return View();
         }
