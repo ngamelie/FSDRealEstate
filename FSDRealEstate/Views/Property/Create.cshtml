@@ -46,13 +46,7 @@
             </div>
             <div class="col-md-6">
                 <label for="Owner_id" class="form-label">Owner_id</label>
-                <select id="Owner_id" class="form-select" asp-for="Owner_id">
-                    <option value="" selected>Choose...</option>
-                    <option value="1">Alex</option>
-                    <option value="2">Bob</option>
-                    <option value="3">Celina</option>
-                </select>
-                <span asp-validation-for="Owner_id" class="errMsg"></span>
+                <input type="text" class="form-control" id="Owner_id" asp-for="Owner_id" value="@User.Identity.Name" readonly>
             </div>
 
             <div class="col-md-12">

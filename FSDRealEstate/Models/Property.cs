@@ -10,7 +10,7 @@ namespace FSDRealEstate.Models
         public int Category_id { get; set; }
         // Owner_id
         [Required]
-        public int Owner_id { get; set; }
+        public string Owner_id { get; set; }
         // Address
         [Required]
         [MaxLength(200, ErrorMessage = "Address maximum is 200 characters.")]

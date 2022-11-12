@@ -30,6 +30,8 @@ using System.Diagnostics;
 using System.Security.Policy;
 using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
 using Microsoft.Extensions.Hosting.Internal;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Principal;
 
 namespace FSDRealEstate.Controllers
 {
@@ -40,12 +42,17 @@ namespace FSDRealEstate.Controllers
         private readonly ICategory _category;
         private readonly IImage _image;
         private readonly string AzureUrl = "https://fsdimage.blob.core.windows.net/realestate/";
+        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public PropertyController(IProperty property, ICategory category, IImage image)
+        public PropertyController(IProperty property, ICategory category, IImage image, 
+            SignInManager<IdentityUser> SignInManager, UserManager<IdentityUser> UserManager)
         {
             _property = property;
             _category = category;
             _image = image;
+            _signInManager = SignInManager;
+            _userManager = UserManager;
 
         }
 
@@ -73,8 +80,11 @@ namespace FSDRealEstate.Controllers
         {
             List<Property> propertyList = _property.GetAll().ToList();
             List<Image> imageList = _image.GetAll().ToList();
-
+            string uemail = User.Identity.Name;
+            if (uemail == "")
+                uemail = "zeen@gmail.com";
             var innerJoin = from p in propertyList
+                            where p.Owner_id == uemail
                             join i in imageList
                             on p.Id equals i.Property_id
                             into p_i
