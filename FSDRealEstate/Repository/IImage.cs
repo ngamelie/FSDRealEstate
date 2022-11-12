@@ -10,5 +10,6 @@ namespace FSDRealEstate.Repository
         public Image Delete(int id);
         public Image Create(Image obj);
         public void DeleteList(int pid);
+        public void uploadBlob(IFormFile img);
     }
 }

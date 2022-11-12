@@ -3,12 +3,33 @@ using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 using Microsoft.AspNetCore.Mvc;
 using FSDRealEstate.Models;
+using FSDRealEstate.ViewModel;
 using FSDRealEstate.Repository;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Net;
 using Microsoft.CodeAnalysis;
+
+using Azure;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
+using Azure.Storage;
+using Azure.Core;
+using System.IO.Compression;
+
+using System.IO;
+
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Diagnostics;
+
+
+using System.Security.Policy;
+using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
+using Microsoft.Extensions.Hosting.Internal;
 
 namespace FSDRealEstate.Controllers
 {
@@ -18,12 +39,13 @@ namespace FSDRealEstate.Controllers
         private readonly IProperty _property;
         private readonly ICategory _category;
         private readonly IImage _image;
+        private readonly string AzureUrl = "https://fsdimage.blob.core.windows.net/realestate/";
 
         public PropertyController(IProperty property, ICategory category, IImage image)
         {
             _property = property;
             _category = category;
-            _image = image; 
+            _image = image;
 
         }
 
@@ -42,6 +64,7 @@ namespace FSDRealEstate.Controllers
                             { p, img };
 
             ViewBag.Properties = innerJoin;
+            ViewData["AzureUrl"] = AzureUrl;
             return View();
         }
 
@@ -61,6 +84,7 @@ namespace FSDRealEstate.Controllers
             ViewData["Property_id"] = id;
             return View();
         }
+
         [Route("Update")]
         public async Task<IActionResult> Update(int id)
         {
@@ -136,11 +160,20 @@ namespace FSDRealEstate.Controllers
 
         [HttpPost]
         [Route("AddImage")]
-        public async Task<IActionResult> AddImage([Bind("Property_id, ImageUrl")] Image obj)
+        public async Task<IActionResult> AddImage(ImageViewModel obj)
         {
             if (ModelState.IsValid)
             {
-                _image.Create(obj);
+                if (obj.Photo == null)
+                    return View("AddImage", new { id = obj.Property_id });
+                Image img = new Image();
+                img.Property_id = obj.Property_id;
+                img.ImageUrl = obj.Photo.FileName;
+
+                _image.DeleteList(img.Property_id);
+                _image.Create(img);
+                _image.uploadBlob(obj.Photo);
+
                 return RedirectToAction(nameof(Index));
             }
 

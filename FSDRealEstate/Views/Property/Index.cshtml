@@ -16,14 +16,14 @@
         <div class="card col-4" style="width: 20rem;">
             @if (@obj.img?.ImageUrl == null)
             {
-                ViewData["imgName"] = "noimage.jpg";
+                ViewData["imgName"] = ViewData["AzureUrl"] + "noimage.jpg";
             }
             else
             {
-                ViewData["imgName"] = @obj.img?.ImageUrl;
+                ViewData["imgName"] = ViewData["AzureUrl"] + @obj.img?.ImageUrl;
             }
 
-            <img src="~/img/@ViewData["imgName"]" class="card-img-top" alt="" asp-append-version="true"/>
+            <img src="@ViewData["imgName"]" class="card-img-top" alt="" asp-append-version="true" />
             
             <div class="card-body">
             NO# : <h5 class="card-title">@obj.p.Id</h5>

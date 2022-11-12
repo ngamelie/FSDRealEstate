@@ -1,15 +1,19 @@
-﻿using FSDRealEstate.Data;
+﻿using Azure.Storage.Blobs;
+using FSDRealEstate.Data;
 using FSDRealEstate.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace FSDRealEstate.Repository
 {
     public class ImageRepository : IImage
     { 
         private readonly ApplicationDbContext _context;
+        private readonly IConfiguration _Configuration;
 
-        public ImageRepository(ApplicationDbContext context)
+        public ImageRepository(ApplicationDbContext context, IConfiguration Configuration)
         {
             this._context = context;
+            _Configuration = Configuration;
         }
 
         public Image Create(Image obj)
@@ -56,5 +60,20 @@ namespace FSDRealEstate.Repository
             return change;
         }
 
+        public void uploadBlob(IFormFile img)
+        {
+            BlobContainerClient containerClient = 
+                new BlobContainerClient(_Configuration.GetConnectionString("AzureStorage"), 
+                    _Configuration.GetConnectionString("AzureContainer"));
+
+            var blobClient = containerClient.GetBlobClient(img.FileName);
+
+            if(containerClient.GetBlobClient(img.FileName).Exists())
+            {
+                containerClient.GetBlobClient(img.FileName).Delete();
+            }
+
+            blobClient.Upload(img.OpenReadStream());
+        }
     }
 }
