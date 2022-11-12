@@ -4,55 +4,73 @@
     ViewBag.Title = "Update Property";
 }
 
-<div class="text-center">
-    <h1 class="display-4">@ViewData["Title"]</h1>
+<h4>@ViewData["Title"]</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form class="row g-3" asp-controller="Property" asp-action="UpdateOne" method="post">
+            <input type="text" hidden class="form-control" id="Address" asp-for="Id" value="@ViewBag.obj.Id">
+            <div class="col-md-6">
+                <label for="Address" class="form-label">Address</label>
+                <input type="text" class="form-control" id="Address" asp-for="Address" value="@ViewBag.obj.Address">
+                <span asp-validation-for="Address" class="errMsg"></span>
+            </div>
+            <div class="col-md-6">
+                <label for="Price" class="form-label">Price</label>
+                <input type="text" class="form-control" id="Price" asp-for="Price" value="@ViewBag.obj.Price">
+                <span asp-validation-for="Price" class="errMsg"></span>
+            </div>
+
+            <div class="col-6">
+                <label for="Location" class="form-label">Location</label>
+                <input type="text" class="form-control" id="Location" asp-for="Location" value="@ViewBag.obj.Location">
+                <span asp-validation-for="Location" class="errMsg"></span>
+            </div>
+            <div class="col-md-6">
+                <label for="Status" class="form-label">Status</label>
+                <select id="Status" class="form-select" asp-for="Status" asp-items="Html.GetEnumSelectList<EnumStatus>()">
+                </select>
+                <span asp-validation-for="Status" class="errMsg"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label for="Category_id" class="form-label">Category</label>
+                @Html.DropDownList("cateSelect")
+            </div>
+            <div class="col-md-6">
+                <label for="Owner_id" class="form-label">Owner_id</label>
+                <select id="Owner_id" class="form-select" asp-for="Owner_id">
+                    <option value="1">Alex</option>
+                    <option value="2">Bob</option>
+                    <option value="3">Celina</option>
+                </select>
+            </div>
+
+            <div class="col-md-12">
+                <label for="Description" class="form-label">Description</label>
+                <textarea type="text" class="form-control" id="Description" asp-for="Description" name="Description" rows="8">
+                </textarea>
+                <span asp-validation-for="Description" class="errMsg"></span>
+            </div>
+ 
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </form>
+    </div>
 </div>
 
-<form class="row g-3" asp-controller="Property" asp-action="UpdateOne" method="post">
-    <input type="text" hidden class="form-control" id="Address" asp-for="Id" value="@ViewBag.obj.Id">
-    <div class="col-md-6">
-        <label for="Address" class="form-label">Address</label>
-        <input type="text" class="form-control" id="Address" asp-for="Address" value="@ViewBag.obj.Address">
-        <span asp-validation-for="Address" class="errMsg"></span>
-    </div>
-    <div class="col-md-6">
-        <label for="Price" class="form-label">Price</label>
-        <input type="text" class="form-control" id="Price" asp-for="Price" value="@ViewBag.obj.Price">
-        <span asp-validation-for="Price" class="errMsg"></span>
-    </div>
+<div>
+    <a asp-action="Sell">Back to List</a>
+</div>
 
-    <div class="col-6">
-        <label for="Location" class="form-label">Location</label>
-        <input type="text" class="form-control" id="Location" asp-for="Location" value="@ViewBag.obj.Location">
-        <span asp-validation-for="Location" class="errMsg"></span>
-    </div>
-    <div class="col-md-6">
-        <label for="Status" class="form-label">Status</label>
-        <select id="Status" class="form-select" asp-for="Status" asp-items="Html.GetEnumSelectList<EnumStatus>()">
-        </select>
-        <span asp-validation-for="Status" class="errMsg"></span>
-    </div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        document.getElementById("Description").innerHTML = "@ViewBag.obj.Description";
 
-    <div class="col-md-6">
-        <label for="Category_id" class="form-label">Category</label>
-        @Html.DropDownList("cateSelect")
-    </div>
-    <div class="col-md-6">
-        <label for="Owner_id" class="form-label">Owner_id</label>
-        <select id="Owner_id" class="form-select" asp-for="Owner_id">
-            <option value="1">Alex</option>
-            <option value="2">Bob</option>
-            <option value="3">Celina</option>
-        </select>
-    </div>
-
-    <div class="col-md-12">
-        <label for="Description" class="form-label">Description</label>
-        <input type="text" class="form-control" id="Description" asp-for="Description" value="@ViewBag.obj.Description">
-        <span asp-validation-for="Description" class="errMsg"></span>
-    </div>
- 
-    <div class="col-12">
-        <button type="submit" class="btn btn-primary">Update</button>
-    </div>
-</form>
+    </script>
+}

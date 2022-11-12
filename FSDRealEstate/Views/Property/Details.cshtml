@@ -1,0 +1,36 @@
+﻿@model Property
+
+@{
+    ViewBag.Title = "Property Details";
+}
+
+<h4>@ViewData["Title"]</h4>
+<hr />
+
+<div class="row">
+
+    <div class="col-4">
+        @if (@ViewBag.obj.imgName == null)
+        {
+            ViewData["imgName"] = ViewData["AzureUrl"] + "noimage.jpg";
+        }
+        else
+        {
+            ViewData["imgName"] = ViewData["AzureUrl"] + @ViewBag.obj.imgName;
+        }
+
+        <img src="@ViewData["imgName"]" class="card-img-top" alt="" asp-append-version="true" />
+
+
+    </div>
+    <div class="col-4">
+        NO# : <h5 class="card-title">@ViewBag.obj.Id</h5>
+        Price: <h5 class="card-title">@ViewBag.obj.Price</h5>
+        <p class="card-text">@ViewBag.obj.Description</p>
+    </div>
+
+</div>
+
+<div>
+    <br /><br /><a asp-action="Index">Back to List</a>
+</div>

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FSDRealEstate.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace FSDRealEstate.ViewModel
 {

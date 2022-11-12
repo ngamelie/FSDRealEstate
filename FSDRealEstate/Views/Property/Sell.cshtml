@@ -10,7 +10,7 @@
 
     @foreach (var obj in ViewBag.Properties)
     {
-        <div class="card col-4" style="width: 20rem;">
+        <div class="card" style="width: 20rem;">
             @if (@obj.img?.ImageUrl == null)
             {
                 ViewData["imgName"] = ViewData["AzureUrl"] + "noimage.jpg";
@@ -26,10 +26,15 @@
             NO# : <h5 class="card-title">@obj.p.Id</h5>
                 Price: <h5 class="card-title">@obj.p.Price</h5>
                 <p class="card-text">@obj.p.Description</p>
-                <a class="btn btn-primary" asp-controller="Property" asp-action="Details" asp-route-id="@obj.p.Id">Details</a>
+                <a class="btn btn-primary" asp-controller="Property" asp-action="Update" asp-route-id="@obj.p.Id">Update</a>
+                <a class="btn btn-primary" asp-controller="Property" asp-action="Delete" asp-route-id="@obj.p.Id">Delete</a>
+                <a class="btn btn-primary" asp-controller="Property" asp-action="AddImage" asp-route-id="@obj.p.Id">Add Image</a>
             </div>
         </div>
     
     }
+
+    
+
 
 </div>

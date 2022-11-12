@@ -68,6 +68,25 @@ namespace FSDRealEstate.Controllers
             return View();
         }
 
+        [Route("Sell")]
+        public ViewResult Sell()
+        {
+            List<Property> propertyList = _property.GetAll().ToList();
+            List<Image> imageList = _image.GetAll().ToList();
+
+            var innerJoin = from p in propertyList
+                            join i in imageList
+                            on p.Id equals i.Property_id
+                            into p_i
+                            from img in p_i.DefaultIfEmpty()
+                            select new
+                            { p, img };
+
+            ViewBag.Properties = innerJoin;
+            ViewData["AzureUrl"] = AzureUrl;
+            return View();
+        }
+
         [Route("Create")]
         public ViewResult Create()
         {
@@ -82,6 +101,41 @@ namespace FSDRealEstate.Controllers
                 return NotFound();
             }
             ViewData["Property_id"] = id;
+            return View();
+        }
+
+        [Route("Details")]
+        public async Task<IActionResult> Details(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Property obj = _property.GetObject(id);
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            List<Image> imgList = _image.GetAll().ToList();
+            var img = from i in imgList
+                    where i.Property_id == obj.Id
+                    select i;
+            List<Image> l = img.ToList();
+
+            PropertyViewModel propertyViewModel = new PropertyViewModel();
+            propertyViewModel.Id = id;  
+            propertyViewModel.Address = obj.Address;
+            propertyViewModel.Price = obj.Price;
+            propertyViewModel.Description = obj.Description;
+            propertyViewModel.Category_id = obj.Category_id;
+            propertyViewModel.Status = obj.Status;
+            propertyViewModel.Location = obj.Location;
+            propertyViewModel.Owner_id = obj.Owner_id;
+            propertyViewModel.imgName = (l.Count > 0) ? l[0].ImageUrl : "noimage.jpg";
+            ViewBag.obj = propertyViewModel;
+            ViewData["AzureUrl"] = AzureUrl;
             return View();
         }
 
@@ -128,7 +182,7 @@ namespace FSDRealEstate.Controllers
             _image.DeleteList(id);
             Property obj = _property.Delete(id);
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Sell));
         }
 
         [HttpPost]
@@ -138,7 +192,7 @@ namespace FSDRealEstate.Controllers
             if (ModelState.IsValid)
             {
                 _property.Create(obj);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Sell));
             }
 
             return View("Create");
@@ -152,7 +206,7 @@ namespace FSDRealEstate.Controllers
             {
                 obj.Category_id = cateSelect;
                 _property.Update(obj);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Sell));
             }
 
             return View("Update", new { id = obj.Id });
@@ -174,7 +228,7 @@ namespace FSDRealEstate.Controllers
                 _image.Create(img);
                 _image.uploadBlob(obj.Photo);
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Sell));
             }
 
             return View("AddImage", new { id = obj.Property_id });
