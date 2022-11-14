@@ -1,0 +1,216 @@
+2022/11/02 (Ngan-Zeen-Jia)
+1. Done / not done since last scrum:
+	- choose title of the project-technologies used-special features-challenging items
+	- finish database design
+	- finish user case diagram
+	- project proposal (done, submitted)
+	- complete Trello (user stories)
+	- create github project repository
+
+2022/11/02 (Ngan)
+2. To do until next Scrum: 
+	- setup the github project repository
+	- setup the initial project (install libraries)
+	- learn some technologies
+	- layout design
+3. Need assistance / figure things out
+	- Learn related technologies and share with each other	
+
+2022/11/02 (Zeen)
+2. To do until next Scrum:  
+	
+3. Need assistance / figure things out
+	
+
+2022/11/02 (Jia)
+2. To do until next Scrum:
+	
+3. Need assistance / figure things out
+	
+
+=============================================================
+2022/11/03 (Ngan)
+1. Done / not done since last scrum:
+	- project setup
+	- learn MVC
+	- Home Page layout
+2. To do until next Scrum:  
+	- connect azure database using sql server managerment
+	- scaffold DB First
+	- generate models
+3. Need assistance / figure things out
+	- learn EF framework
+
+2022/11/03 (Zeen)
+1. Done / not done since last scrum:
+	- scaffold DB First
+	- generate models	
+2. To do until next Scrum:  
+	- Login and Register layout and functions
+	
+3. Need assistance / figure things out
+	- learn SQL Server Azure
+
+2022/11/03 (Jia)
+1. Done / not done since last scrum:
+	
+
+2. To do until next Scrum:
+	
+
+3. Need assistance / figure things out
+	
+=============================================================
+2022/11/07 (Ngan)
+1. Done / not done since last scrum:
+	- Login and Register layout and functions
+
+2. To do until next Scrum:
+	- Menu Layout and functions
+	- implement User Role (Agent - Seller) 
+	
+3. Need assistance / figure things out
+	- None
+
+2022/11/07 (Zeen)
+1. Done / not done since last scrum:	
+
+2. To do until next Scrum:
+	
+
+3. Need assistance / figure things out
+	
+
+2022/11/07 (Jia)
+1. Done / not done since last scrum:
+	
+2. To do until next Scrum:
+	
+3. Need assistance / figure things out
+	
+
+=============================================================
+2022/11/08 (Ngan)
+1. Done / not done since last scrum:
+	- Menu Layout and functions
+	- implement User Role (Agent - Seller) 
+
+2. To do until next Scrum:
+	- CRUD on Properties	
+	
+3. Need assistance / figure things out
+	- None
+	
+2022/11/08 (Zeen)
+1. Done / not done since last scrum:	
+	
+2. To do until next Scrum:  	
+	
+3. Need assistance / figure things out
+
+
+2022/11/08 (Jia)
+1. Done / not done since last scrum:	
+
+2. To do until next Scrum:
+
+3. Need assistance / figure things out
+	
+	
+=============================================================
+2022/11/09 (Ngan)
+1. Done / not done since last scrum:
+	- CRUD on Properties (not complete)
+
+2. To do until next Scrum:
+	- CRUD on Properties 
+	- integrate BingMap
+	
+3. Need assistance / figure things out
+	- BingMap API
+
+2022/11/09 (Zeen)
+1. Done / not done since last scrum:
+
+2. To do until next Scrum:  
+	
+3. Need assistance / figure things out
+	
+2022/11/09 (Jia)
+1. Done / not done since last scrum:
+	
+2. To do until next Scrum:
+	
+3. Need assistance / figure things out
+	
+=============================================================
+2022/11/10 (Ngan)
+1. Done / not done since last scrum:
+	- CRUD on Properties 
+	- integrate BingMap API
+	
+2. To do until next Scrum:
+	- CRUD on Seller
+	- fix bug on BingMap API
+	
+3. Need assistance / figure things out
+	
+
+2022/11/10 (Zeen)
+1. Done / not done since last scrum:
+	
+2. To do until next Scrum:  
+	
+3. Need assistance / figure things out
+	
+
+2022/11/10 (Jia)
+1. Done / not done since last scrum:
+	
+
+2. To do until next Scrum:
+
+
+3. Need assistance / figure things out
+
+
+=============================================================
+2022/10/12 (Ngan)
+1. Done / not done since last scrum:
+	- CRUD on Seller
+	- fix bug on BingMap API
+
+2. To do until next Scrum:
+	- Deploy on Azure 
+	- Fix bug
+	- Presentation 
+	- Trello	
+
+3. Need assistance / figure things out
+	
+
+2022/10/12 (Zeen)
+1. Done / not done since last scrum:
+	
+2. To do until next Scrum:  
+	
+3. Need assistance / figure things out
+
+
+2022/10/12 (Jia)
+1. Done / not done since last scrum:
+
+2. To do until next Scrum:
+	
+
+3. Need assistance / figure things out
+	
+	
+
+	
+	
+	
+	
+	
+=============================================================
+
