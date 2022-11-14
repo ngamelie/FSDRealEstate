@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Storage.Blobs" Version="12.14.1" />
+    <PackageReference Include="BingMapsRESTToolkit" Version="1.1.4" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.10" />
     <PackageReference Include="Microsoft.Azure.CognitiveServices.Vision.Face" Version="2.8.0-preview.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.10">
