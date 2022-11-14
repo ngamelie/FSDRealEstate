@@ -32,6 +32,9 @@ using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
 using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Principal;
+using BingMapsRESTToolkit;
+using Location = BingMapsRESTToolkit.Location;
+//using BingMapsSDSToolkit.GeocodeDataflowAPI;
 
 namespace FSDRealEstate.Controllers
 {
@@ -127,6 +130,26 @@ namespace FSDRealEstate.Controllers
             {
                 return NotFound();
             }
+
+
+
+
+
+            //get location to generate to map
+            var request = new GeocodeRequest();
+            request.BingMapsKey = "AjbSxlgzSHLbi3vL9WhgUp0AaOyV3zCiARaEx8uNL2ma-aCzmCTjrlVwu0qTttUp";
+
+            request.Query = obj.Location;;
+
+            var result = request.Execute();
+            Location Geocode = (BingMapsRESTToolkit.Location)result.Result.ResourceSets[0].Resources[0];
+
+            ViewBag.latitude = Geocode.Point.Coordinates[0];
+            ViewBag.longitude = Geocode.Point.Coordinates[1];
+
+
+
+
 
             List<Image> imgList = _image.GetAll().ToList();
             var img = from i in imgList

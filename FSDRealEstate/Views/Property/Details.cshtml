@@ -28,9 +28,34 @@
         Price: <h5 class="card-title">@ViewBag.obj.Price</h5>
         <p class="card-text">@ViewBag.obj.Description</p>
     </div>
-
+    <div class="col-md-9 map my-2 p-3">
+        <div id="myMap" style="width:100%; height:400px;"></div>
+    </div>
 </div>
+
+
 
 <div>
     <br /><br /><a asp-action="Index">Back to List</a>
 </div>
+
+@section Scripts {
+    <script type='text/javascript'>
+        function loadMapScenario() {
+            var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
+                credentials: 'AjbSxlgzSHLbi3vL9WhgUp0AaOyV3zCiARaEx8uNL2ma-aCzmCTjrlVwu0qTttUp',
+                mapTypeId: Microsoft.Maps.MapTypeId.road,
+                zoom: 5
+            });
+
+            var loc = new Microsoft.Maps.Location(@ViewBag.latitude, @ViewBag.longitude);
+            var pin = new Microsoft.Maps.Pushpin(loc);
+
+            map.entities.push(pin);
+            //  Center the map on the user's location.
+            map.setView({ center: loc, zoom: 15 });
+
+        }
+    </script>
+    <script type='text/javascript' src='http://www.bing.com/api/maps/mapcontrol?callback=loadMapScenario' async defer></script>
+}
